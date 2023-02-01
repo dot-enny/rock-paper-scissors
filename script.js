@@ -53,19 +53,20 @@ choices.forEach((choice) => {
         choice.addEventListener('transitionend', removeHumanChoiceAnimation);
 
         // computer choice animation 
-        function comAni () {
-            let comCh = choice.getAttribute('data-test');
-            if (computerChoice == comCh) {
-                choice.classList.add('computer-select');
-                choice.addEventListener('transitionend', removeComputerChoiceAnimation);
-            };
-            function removeComputerChoiceAnimation (e) {
-                if (e.propertyName !== 'transform') return;
-                e.target.classList.remove('computer-select');
-            };
-        }
-        comAni();
+        // function comAni () {
+        //     let comCh = choice.getAttribute('data-test');
+        //     if (computerChoice == comCh) {
+        //         choice.classList.add('computer-select');
+        //         choice.addEventListener('transitionend', removeComputerChoiceAnimation);
+        //     };
+        //     function removeComputerChoiceAnimation (e) {
+        //         if (e.propertyName !== 'transform') return;
+        //         e.target.classList.remove('computer-select');
+        //     };
+        // }
+        // comAni();
         
+        // win, lose and draw conditions
         if (humanChoice == computerChoice) {
             draw();
         } else if (humanChoice == 'rock' && computerChoice == 'scissors') {
