@@ -27,13 +27,27 @@ const draw = () => {
     drawDiv.classList.remove('opac');
     drawDiv.classList.add('pop');
 };
+removeAnimation([drawDiv], 'pop', 'opac');
 // REMOVE DRAW-ANIMATION
-function removeDrawTransition (e) {
-    if (e.propertyName !== 'transform') return;
-    e.target.classList.remove('pop');
-    e.target.classList.add('opac');
-}
-drawDiv.addEventListener('transitionend', removeDrawTransition);
+// function removeDrawTransition (e) {
+//     if (e.propertyName !== 'transform') return;
+//     e.target.classList.remove('pop');
+//     e.target.classList.add('opac');
+// }
+// drawDiv.addEventListener('transitionend', removeDrawTransition);
+
+
+function removeAnimation ([...fields], toRemove, toAdd) {
+    fields.forEach((field) => {
+        field.addEventListener('transitionend', (e) => {
+            if (e.propertyName !== 'transform') {
+                e.target.classList.remove(toRemove);
+                e.target.classList.add(toAdd);
+            };
+        });
+    });
+};
+
 
 
 // WIN, LOSE AND DRAW CONDITIONS
@@ -44,13 +58,16 @@ choices.forEach((choice) => {
         let computerChoice = arrayOfChoices[Math.floor(Math.random() * arrayOfChoices.length)];
         console.log(humanChoice, computerChoice);
 
-        // human choice animation
+        // add human choice animation
         choice.classList.add('human-select');
-        function removeHumanChoiceAnimation (e) {
-            if (e.propertyName !== 'transform') return;
-            e.target.classList.remove('human-select');
-        };
-        choice.addEventListener('transitionend', removeHumanChoiceAnimation);
+        removeAnimation([choice], 'human-select');
+
+        // remove human choice animation
+        // function removeHumanChoiceAnimation (e) {
+        //     if (e.propertyName !== 'transform') return;
+        //     e.target.classList.remove('human-select');
+        // };
+        // choice.addEventListener('transitionend', removeHumanChoiceAnimation);
 
         // computer choice animation 
         // function comAni () {
@@ -66,7 +83,7 @@ choices.forEach((choice) => {
         // }
         // comAni();
         
-        // win, lose and draw conditions
+        // WIN, LOSE AND DRAW CONDITIONS
         if (humanChoice == computerChoice) {
             draw();
         } else if (humanChoice == 'rock' && computerChoice == 'scissors') {
@@ -96,8 +113,9 @@ resetGameDiv.addEventListener('click', (e) => {
     computerScoreSpan.innerText = `COMPUTER : ${computerScore}`;
 });
 // RESET-BUTTON ANIMATION
-function removeResetAnimation (e) {
-    if (e.propertyName !== 'transform') return;
-    e.target.classList.remove('reset-game-btn-animation');
-}
-resetGameDiv.addEventListener('transitionend', removeResetAnimation);
+removeAnimation([resetGameDiv], 'reset-game-btn-animation');
+// function removeResetAnimation (e) {
+//     if (e.propertyName !== 'transform') return;
+//     e.target.classList.remove('reset-game-btn-animation');
+// }
+// resetGameDiv.addEventListener('transitionend', removeResetAnimation);
