@@ -4,11 +4,13 @@ const computerScoreSpan = document.getElementById('computer-score');
 const drawDiv = document.getElementById('draw');
 const resetGameDiv = document.querySelector('.reset-game');
 
+
 // COMPUTER CHOICES
 let arrayOfChoices = [];
 choices.forEach((choice) => {
     arrayOfChoices.push(choice.getAttribute('value'));
 });
+
 
 // SCORES
 let humanScore = 0;
@@ -20,24 +22,18 @@ const win = () => {
 };
 const lose = () => {
     return computerScore++;
-}
-
-// ADD DRAW ANIMATION
-const draw = () => {
-    drawDiv.classList.remove('opac');
-    drawDiv.classList.add('pop');
 };
-removeAnimation([drawDiv], 'pop', 'opac');
-// REMOVE DRAW-ANIMATION
-// function removeDrawTransition (e) {
-//     if (e.propertyName !== 'transform') return;
-//     e.target.classList.remove('pop');
-//     e.target.classList.add('opac');
-// }
-// drawDiv.addEventListener('transitionend', removeDrawTransition);
 
 
-function removeAnimation ([...fields], toRemove, toAdd) {
+// ADD ANIMATIONS
+function addAnimation(field, toAdd, toRemove) {
+    field.classList.remove(toRemove)
+    field.classList.add(toAdd)
+};
+
+
+// REMOVE ANIMATIONS
+function removeAnimation([...fields], toRemove, toAdd) {
     fields.forEach((field) => {
         field.addEventListener('transitionend', (e) => {
             if (e.propertyName !== 'transform') {
@@ -49,6 +45,15 @@ function removeAnimation ([...fields], toRemove, toAdd) {
 };
 
 
+// ADD DRAW ANIMATION
+const draw = () => {
+    addAnimation(drawDiv, 'pop', 'opac')
+};
+// REMOVE DRAW-ANIMATION
+removeAnimation([drawDiv], 'pop', 'opac');
+
+
+
 
 // WIN, LOSE AND DRAW CONDITIONS
 choices.forEach((choice) => {
@@ -56,18 +61,11 @@ choices.forEach((choice) => {
         // get choices
         let humanChoice = choice.getAttribute('value');
         let computerChoice = arrayOfChoices[Math.floor(Math.random() * arrayOfChoices.length)];
-        console.log(humanChoice, computerChoice);
 
-        // add human choice animation
-        choice.classList.add('human-select');
+        // ADD HUMAN CHOICE ANIMATION
+        addAnimation(choice, 'human-select');
+        // REMOVE HUMAN CHOICE ANIMATION
         removeAnimation([choice], 'human-select');
-
-        // remove human choice animation
-        // function removeHumanChoiceAnimation (e) {
-        //     if (e.propertyName !== 'transform') return;
-        //     e.target.classList.remove('human-select');
-        // };
-        // choice.addEventListener('transitionend', removeHumanChoiceAnimation);
 
         // computer choice animation 
         // function comAni () {
@@ -82,13 +80,13 @@ choices.forEach((choice) => {
         //     };
         // }
         // comAni();
-        
+
         // WIN, LOSE AND DRAW CONDITIONS
         if (humanChoice == computerChoice) {
             draw();
         } else if (humanChoice == 'rock' && computerChoice == 'scissors') {
             win();
-            console.log(humanScore, computerScore);
+            // console.log(humanScore, computerScore);
         } else if (humanChoice == 'paper' && computerChoice == 'rock') {
             win();
             console.log(humanScore, computerScore);
@@ -101,12 +99,12 @@ choices.forEach((choice) => {
         }
         humanScoreSpan.innerText = `YOU : ${humanScore}`;
         computerScoreSpan.innerText = `COMPUTER : ${computerScore}`;
-    })
+    });
 });
 
 // RESET GAME
 resetGameDiv.addEventListener('click', (e) => {
-    resetGameDiv.classList.add('reset-game-btn-animation');
+    addAnimation(resetGameDiv, 'reset-game-btn-animation');
     humanScore = 0;
     computerScore = 0;
     humanScoreSpan.innerText = `YOU : ${humanScore}`;
@@ -114,8 +112,3 @@ resetGameDiv.addEventListener('click', (e) => {
 });
 // RESET-BUTTON ANIMATION
 removeAnimation([resetGameDiv], 'reset-game-btn-animation');
-// function removeResetAnimation (e) {
-//     if (e.propertyName !== 'transform') return;
-//     e.target.classList.remove('reset-game-btn-animation');
-// }
-// resetGameDiv.addEventListener('transitionend', removeResetAnimation);
