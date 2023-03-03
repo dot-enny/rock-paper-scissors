@@ -2,9 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: hsl(0, 0%, 22%);
 }
 body {
+    background-color: hsl(0, 0%, 22%);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     width: 100vw;
     height: 100vh;
@@ -26,7 +26,7 @@ main {
     margin: 1em;
     font-size: 1em;
     font-weight: 700;
-    transition: all ease-in 0.07s;
+    transition: all ease-in 0.08s;
 }
 .choice:hover {
     border-color: green;
@@ -39,7 +39,7 @@ main {
 .computer-select {
     transform: scale(1.1);
     border: 1px solid red;
-    box-shadow: hsl(0, 61%, 50%) 0.1em 0.1em 1.5em 0.1em;
+    box-shadow: hsl(0, 61%, 50%) 0.1em 0.1em 3em 0.1em;
 }
 .scores {
     padding: 1em;
@@ -54,7 +54,7 @@ main {
 #draw {
     align-self: center;
     color: orange;
-    transition: all ease-in 0.2s;
+    transition: all ease-in 0.25s;
 }
 .pop {
     transform: scale(2);

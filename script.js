@@ -30,8 +30,6 @@ function addAnimation(field, toAdd, toRemove) {
     field.classList.remove(toRemove)
     field.classList.add(toAdd)
 };
-
-
 // REMOVE ANIMATIONS
 function removeAnimation([...fields], toRemove, toAdd) {
     fields.forEach((field) => {
@@ -53,12 +51,22 @@ const draw = () => {
 removeAnimation([drawDiv], 'pop', 'opac');
 
 
+// COMPUTER CHOICE ANIMATION
+function comAni(computerChoice) {
+    choices.forEach((choice) => {
+        let comChoice = choice.getAttribute('value');
+        if (computerChoice == comChoice) {
+            addAnimation(choice, 'computer-select');
+            removeAnimation([choice], 'computer-select');
+        };
+    });
+};
 
 
 // WIN, LOSE AND DRAW CONDITIONS
 choices.forEach((choice) => {
     choice.addEventListener('click', (e) => {
-        // get choices
+        // GET CHOICES
         let humanChoice = choice.getAttribute('value');
         let computerChoice = arrayOfChoices[Math.floor(Math.random() * arrayOfChoices.length)];
 
@@ -66,36 +74,20 @@ choices.forEach((choice) => {
         addAnimation(choice, 'human-select');
         // REMOVE HUMAN CHOICE ANIMATION
         removeAnimation([choice], 'human-select');
-
-        // computer choice animation 
-        // function comAni () {
-        //     let comCh = choice.getAttribute('data-test');
-        //     if (computerChoice == comCh) {
-        //         choice.classList.add('computer-select');
-        //         choice.addEventListener('transitionend', removeComputerChoiceAnimation);
-        //     };
-        //     function removeComputerChoiceAnimation (e) {
-        //         if (e.propertyName !== 'transform') return;
-        //         e.target.classList.remove('computer-select');
-        //     };
-        // }
-        // comAni();
+        // COMPUTER CHOICE ANIMATION 
+        comAni(computerChoice);
 
         // WIN, LOSE AND DRAW CONDITIONS
         if (humanChoice == computerChoice) {
             draw();
         } else if (humanChoice == 'rock' && computerChoice == 'scissors') {
             win();
-            // console.log(humanScore, computerScore);
         } else if (humanChoice == 'paper' && computerChoice == 'rock') {
             win();
-            console.log(humanScore, computerScore);
         } else if (humanChoice == 'scissors' && computerChoice == 'paper') {
             win();
-            console.log(humanScore, computerScore);
         } else {
             lose();
-            console.log(humanScore, computerScore);
         }
         humanScoreSpan.innerText = `YOU : ${humanScore}`;
         computerScoreSpan.innerText = `COMPUTER : ${computerScore}`;
